@@ -56,34 +56,11 @@ def Feature():
     random.seed(30)
     random.shuffle(label)
 
-    newarr = arr[10000:39515]
-    newlabel = label[10000:39515]
-    arr1, arr2 = min_max1(newarr)
+    arr1, arr2 = min_max(arr)
     return arr1, arr2, newlabel
 
-def min_max(x):
-    # x_max = []
-    # x_min = []
-    # for i in range(11):
-    #     x_max.append([])
-    #     x_min.append([])
-    #     for j in range(12):
-    #         x_max[i].append(np.max(x[:,i,j]))
-    #         x_min[i].append(np.min(x[:,i,j]))
-    x_max = np.max(x, axis=0)
-    x_max = np.max(x_max,axis=1)
-    x_min = np.min(x, axis=0)
-    x_min = np.min(x_min, axis=1)
-    # x_max = np.array(x_max)
-    # x_min = np.array(x_min)
-    for i in range(len(x)):
-        for j in range(len(x[i])):
-            for k in range(len(x[i][j])):
-                if x_max[j] - x_min[j] != 0:
-                    x[i, j,k] = float(x[i, j,k] - x_min[j]) / float(x_max[j] - x_min[j])
-    return x
 
-def min_max1(x):
+def min_max(x):
     # x_max = []
     # x_min = []
     # for i in range(11):
@@ -145,26 +122,7 @@ def gray_relation_coefficient(x, y, delta=0.5):
     # 返回平均关联系数作为最终结果
     return np.mean(rho)
 
-def KNN_graph(data):
-    # data = np.reshape(data, (data.shape[0], -1))
-    graph = []
-    distance = np.zeros(shape=(11, 11))
-    # edge_value = np.zeros(shape=(11, 11, 3))
-    # for i in range(len(data)):
-    #     for j in range(len(distance)):
-    #         for k in range(len(distance)):
-    #             print(data[:, 0, 0])
-    #
-    #             print(data[:, 1, 0])
-    #             # vec1 = th.Tensor(data[:, 0, 0])
-    #             # vec2 = th.Tensor(data[:, 1, 0])
-    #             vec1 = data[:, j, 0].reshape(1, -1)
-    #             vec2 = data[:, k, 0].reshape(1, -1)
-    #             print(len(data[:, 0, 0]))
-    #             #cos_sim = F.cosine_similarity(vec1.T, vec2.T, dim=0)
-    #             cos_sim = cosine_similarity(vec1, vec2)
-    #             print(cos_sim)
-    #             distance[j, k] += cos_sim
+def lsgh_graph(data):
     src1 = []
     dst1 = []
     gray_list = []
@@ -193,99 +151,6 @@ def KNN_graph(data):
         graph.append(g)
     return graph
 
-    # for j in range(len(distance)):
-    #     for k in range(len(distance)):
-    #         # print(data[:, 0, 0])
-    #         # print(data[:, 1, 0])
-    #         # vec1 = th.Tensor(data[:, 0, 0])
-    #         # vec2 = th.Tensor(data[:, 1, 0])
-    #         vec1 = data[:, j, 0].reshape(1, -1)
-    #         vec2 = data[:, k, 0].reshape(1, -1)
-    #         # print(len(data[:, 0, 0]))
-    #         # cos_sim = F.cosine_similarity(vec1.T, vec2.T, dim=0)
-    #         # cos_sim = F.cosine_similarity(tensor(vec1), tensor(cos_vec2), dim=0)
-    #         cos_sim =cosine_similarity(vec1, vec2)
-    #         distance[j, k] += cos_sim
-    # distance = np.sqrt(distance)
-    # K = 3 # Knn --> K = 3
-    # src = []
-    # dst = []
-    #
-    #
-    #
-    # # print(len(distance))
-    # for i in range(len(distance)):
-    #     for k in range(len(distance) - K):
-    #         index = np.argwhere(distance[i] == np.min(distance[i]))
-    #         distance[i, index] = 10000
-    #     for j in range(len(distance[i])):
-    #         if distance[i, j] != 10000:
-    #             src.append(i)
-    #             dst.append(j)
-    #             # if str(i) in attention_value.keys():
-    #             #     value1 = attention_value[str(i)]
-    #             # value1=attention_value.get(str(i))
-    #             # if str(j) in attention_value:
-    #             #     value2 = attention_value[str(j)]
-    #             # value2 = attention_value.get(str(j))
-    #             # edge_data = [value1, distance[i,j],value2]
-    #             #edge_data = np.mat(edge_data)
-    #             # print("Original dataset = {}*{}".format(edge_data.shape[0], edge_data.shape[1]))
-    #             # pca = PCAcomponent(edge_data, 1)
-    #             # pca.fit()
-    #             # print(pca.low_dataMat)
-    #             # print(pca.variance_ratio)
-    #             # dis.append(distance[i,j])
-    #             # dis.append(edge_data)
-    #             # edge_value[i, j] += edge_data
-    #             # for i in range(len(edge_value)):
-    #             #     for j in range(len(edge_value)):
-    # distance_value = [[] for i in range(len(src))]
-    # value1=[]
-    # value2=[]
-    # for i in range(len(src)):
-    #     s=src[i]
-    #     d=dst[i]
-    #     # value1.append(attention_value.get(str(s)))
-    #     # value2.append(attention_value.get(str(d)))
-    #     for j in range(len(data)):
-    #         cos_value1=data[j, s, 0].reshape(1, -1)   #data[j][s]
-    #         cos_value2=data[j, d, 0].reshape(1, -1)   #data[j][d]
-    #         dis_value =F.cosine_similarity(tensor(cos_value1), tensor(cos_value2), dim=0)
-    #         dis_value = dis_value.item()
-    #         distance_value[i].append(dis_value)
-    #
-    #
-    # for i in range(len(data)):
-    #     dis = []
-    #     g = dgl.graph((src, dst))
-    #     Feat = th.from_numpy(data[i])
-    #     Feat = Feat.to(th.float32)
-    #     g.ndata['feature'] = Feat
-    #     # print(type(Feat))
-    #     # print(g.ndata['feature'])
-    #     for j in range(len(src)):
-    #         # edge_data = [value1[j], distance_value[j][i], value2[j]]
-    #         edge_data = [distance_value[j][i]]
-    #         dis.append(edge_data)
-    #     # print(type(dis))
-    #     dis = tensor(dis)
-    #     g.edata['value'] = dis
-    #     # print(g.edata['value'])
-    #         # for s in range(len(distance)):
-    #         #     for d in range(len(distance[i])):
-    #         #         edge_value=tensor(edge_value)
-    #         #         print(edge_value[s, d])
-    #         #         print(type(edge_value))
-    #         #         if edge_value[s,d]!=[0.,0.,0.]:
-    #         #             g.edata['value']=edge_value[s,d]
-    #         #             print(g.edata['value'])
-    #     g = dgl.add_self_loop(g)
-    #     graph.append(g)
-    #     # nx.draw(g.to_networkx(), with_labels=True)
-    #     # # sleep(5000)
-    #     # plt.show()
-    # return graph
 
 def save(file_path, graph, graph_labels):
     # 将图形数据和标签转换为NumPy数组
