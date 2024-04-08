@@ -41,11 +41,7 @@ def Feature():
     random.seed(30)
     random.shuffle(label)
 
-    newarr = arr[10000:39515]
-    newlabel = label[10000:39515]
-    arr1 = min_max(newarr)
-    # np.save('/home/ran/Desktop/openrainbow/openrainbow/PT2_GCN/random_data/sflow_label1.npy', label)
-    # np.save('/home/ran/Desktop/openrainbow/openrainbow/PT2_GCN/random_data/sflow_data1.npy', arr)
+    arr1 = min_max(arr)
     return arr1, newlabel
 
 
@@ -135,14 +131,3 @@ data, label = Feature()
 graph = KNN_graph(data)
 graph_labels = {'label': th.tensor(label)}
 save_graphs("/home/ran/Desktop/openrainbow/openrainbow/GCN/data/knn(safive).bin", graph, graph_labels)
-# g_1, label_1 = load_graphs("./knn_feature_data1.bin")
-# ShowGraph(graph, None, None)
-# nx.draw(g_1.to_networkx(), with_labels = True)
-# plt.show()
-#
-# # g_1, label_1 = load_graphs("./graph.bin",[2])
-# print(len(g_1), type(g_1), len(label_1['label']))
-# print(g_1[0], label_1[0])
-# print(g_1[0].ndata['feature'])
-# nx.draw(g_1[10].to_networkx())
-# plt.show()
